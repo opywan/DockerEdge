@@ -1,0 +1,36 @@
+# name: "Ubu" # Check Substrate subclasses under DSL
+resources:
+  boot_config:
+    boot_device:
+      disk_address:
+        adapter_type: SCSI
+        device_index: 0
+  disk_list:
+  - data_source_reference:
+      kind: image
+      name: Ubuntu-18.04-cloud-init
+      uuid: 884caebe-8a12-4053-9151-eb2fde6834dd
+    disk_size_mib: 10000
+    device_properties:
+      device_type: DISK
+      disk_address:
+        adapter_type: SCSI
+        device_index: 0
+  num_sockets: 2
+  num_vcpus_per_socket: 1
+  memory_size_mib: 4096
+  guest_customization:
+    cloud_init:
+      user_data: |-
+        #cloud-config
+        users:
+          - name: ubuntu
+            sudo: ['ALL=(ALL) NOPASSWD:ALL']
+          expire: False
+        ssh_pwauth:   true
+  nic_list:
+  - nic_type: NORMAL_NIC
+    network_function_nic_type: INGRESS
+    subnet_reference:
+      kind: subnet
+      uuid: 4890b540-52ba-4df2-889c-63e98ea30ee0
